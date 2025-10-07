@@ -1,0 +1,22 @@
+- name: Deploy Scientific Calculator Docker Container
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Stop and remove any existing container
+      community.docker.docker_container:
+        name: scientific-calculator-app
+        state: absent
+      ignore_errors: yes
+
+    - name: Pull the latest Docker image from Docker Hub
+      community.docker.docker_image:
+        name: "knightstriker/scientific-calculator:latest"
+        source: pull
+
+    - name: Run the Docker container
+      community.docker.docker_container:
+        name: scientific-calculator-app
+        image: "knightstriker/scientific-calculator:latest"
+        state: started
+        interactive: true # Keep STDIN open for the menu
+        tty: true       # Allocate a pseudo-TTY for interaction
