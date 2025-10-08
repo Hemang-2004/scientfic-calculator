@@ -19,4 +19,5 @@
         image: "nonachadcp/scientific-calculator:latest"
         state: started
         interactive: true
-        tty: true       ]
+        tty: true
+
