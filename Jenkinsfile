@@ -30,25 +30,14 @@ pipeline {
         }
 
         stage('4. Deploy with Ansible') {
-                    steps {
-                        echo 'Deploying the container using Ansible...'
-                        sh 'BUILD_ID=dontKillMe ansible-playbook playbook.yml'
-                    }
-                }
-
-        stage('5. Run Docker Container') {
             steps {
-                echo 'Starting Docker container...'
-                sh """
-                   docker rm -f scientific-calculator-app || true
-                   docker run -d --name scientific-calculator-app ${DOCKER_IMAGE_NAME}:latest tail -f /dev/null
-                """
+                echo 'Deploying the container using Ansible...'
+                sh 'ansible-playbook playbook.yml'
             }
         }
-
-
     }
 
+    // === FINAL MAIL NOTIFICATION SECTION ===
     post {
         always {
             echo 'Pipeline finished. Logging out of Docker Hub.'
@@ -58,13 +47,33 @@ pipeline {
         success {
             mail to: 'nonachadcp@gmail.com',
                  subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
-                 body: "Build succeeded!\nJob: ${JOB_NAME}\nBuild Number: ${BUILD_NUMBER}\nDocker Image: ${DOCKER_IMAGE_NAME}:latest\nBuild URL: ${BUILD_URL}\nAll stages completed successfully."
+                 body: """\
+Build succeeded!
+
+
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Docker Image: ${DOCKER_IMAGE_NAME}:latest
+Build URL: ${BUILD_URL}
+
+All stages completed successfully.
+"""
         }
 
         failure {
             mail to: 'nonachadcp@gmail.com',
                  subject: "FAILURE: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
-                 body: "Build failed!\nJob: ${JOB_NAME}\nBuild Number: ${BUILD_NUMBER}\nDocker Image: ${DOCKER_IMAGE_NAME}:latest\nCheck the build logs here: ${BUILD_URL}\nPlease investigate the issue."
+                 body: """\
+Build failed!
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Docker Image: ${DOCKER_IMAGE_NAME}:latest
+Check the build logs here: ${BUILD_URL}
+
+Please investigate the issue.
+"""
         }
     }
 }
