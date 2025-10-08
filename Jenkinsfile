@@ -50,7 +50,7 @@ pipeline {
         stage('6. Test Container') {
             steps {
                 echo 'Testing the container...'
-                sh "docker exec -it scientific-calculator-app java -jar scientific-calculator.jar"
+                sh "docker exec scientific-calculator-app java -jar scientific-calculator.jar"
             }
         }
     }
