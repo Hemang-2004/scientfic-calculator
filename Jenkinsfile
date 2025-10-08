@@ -16,7 +16,8 @@ pipeline {
         stage('2. Build Docker Image') {
             steps {
                 echo 'Building the Docker image...'
-                sh "docker build -t ${DOCK-IMAGE_NAME}:latest ."
+                // CORRECTED VARIABLE NAME HERE
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:latest ."
             }
         }
         stage('3. Push to Docker Hub') {
@@ -45,7 +46,7 @@ pipeline {
                 body: """<p>SUCCESS: Pipeline <b>${env.JOB_NAME}</b> - Build #${env.BUILD_NUMBER}</p>
                            <p>The application was deployed successfully.</p>
                            <p>Check console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                to: 'hemangseth0411@gmail.com' // <-- CHANGE THIS TO YOUR EMAIL
+                to: 'hemangseth0411@gmail.com' // <-- REMEMBER TO CHANGE THIS TO YOUR EMAIL
             )
         }
         failure {
@@ -54,7 +55,7 @@ pipeline {
                 body: """<p>FAILURE: Pipeline <b>${env.JOB_NAME}</b> - Build #${env.BUILD_NUMBER}</p>
                            <p>The pipeline failed. Please check the logs.</p>
                            <p>Check console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                to: 'hemangseth0411@gmail.com' // <-- CHANGE THIS TO YOUR EMAIL
+                to: 'hemangseth0411@gmail.com' // <-- REMEMBER TO CHANGE THIS TO YOUR EMAIL
             )
         }
     }
