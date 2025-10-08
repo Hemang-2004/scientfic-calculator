@@ -45,10 +45,12 @@ pipeline {
         }
 
         success {
-            mail to: 'hemangseth0411@gmail.com',
+            mail to: 'nonachadcp@gmail.com',
                  subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
                  body: """\
 Build succeeded!
+
+
 
 Job: ${JOB_NAME}
 Build Number: ${BUILD_NUMBER}
@@ -60,7 +62,7 @@ All stages completed successfully.
         }
 
         failure {
-            mail to: 'hemangseth0411@gmail.com',
+            mail to: 'nonachadcp@gmail.com',
                  subject: "FAILURE: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
                  body: """\
 Build failed!
