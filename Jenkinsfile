@@ -35,22 +35,22 @@ pipeline {
                 sh 'ansible-playbook playbook.yml'
             }
         }
-    }
-    stage('5. Run Docker Container') {
-        steps {
-            echo 'Starting Docker container...'
-            sh "docker run -dit --name scientific-calculator-app ${DOCKER_IMAGE_NAME}:latest"
+
+        stage('5. Run Docker Container') {
+            steps {
+                echo 'Starting Docker container...'
+                sh "docker run -dit --name scientific-calculator-app ${DOCKER_IMAGE_NAME}:latest"
+            }
+        }
+
+        stage('6. Test Container') {
+            steps {
+                echo 'Testing the container...'
+                sh "docker exec -it scientific-calculator-app java -jar scientific-calculator.jar"
+            }
         }
     }
 
-    stage('6. Test Container') {
-        steps {
-            echo 'Testing the container...'
-            sh "docker exec -it scientific-calculator-app java -jar scientific-calculator.jar"
-        }
-    }
-
-    // === FINAL MAIL NOTIFICATION SECTION ===
     post {
         always {
             echo 'Pipeline finished. Logging out of Docker Hub.'
@@ -60,33 +60,13 @@ pipeline {
         success {
             mail to: 'nonachadcp@gmail.com',
                  subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
-                 body: """\
-Build succeeded!
-
-
-
-Job: ${JOB_NAME}
-Build Number: ${BUILD_NUMBER}
-Docker Image: ${DOCKER_IMAGE_NAME}:latest
-Build URL: ${BUILD_URL}
-
-All stages completed successfully.
-"""
+                 body: "Build succeeded!\nJob: ${JOB_NAME}\nBuild Number: ${BUILD_NUMBER}\nDocker Image: ${DOCKER_IMAGE_NAME}:latest\nBuild URL: ${BUILD_URL}\nAll stages completed successfully."
         }
 
         failure {
             mail to: 'nonachadcp@gmail.com',
                  subject: "FAILURE: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
-                 body: """\
-Build failed!
-
-Job: ${JOB_NAME}
-Build Number: ${BUILD_NUMBER}
-Docker Image: ${DOCKER_IMAGE_NAME}:latest
-Check the build logs here: ${BUILD_URL}
-
-Please investigate the issue.
-"""
+                 body: "Build failed!\nJob: ${JOB_NAME}\nBuild Number: ${BUILD_NUMBER}\nDocker Image: ${DOCKER_IMAGE_NAME}:latest\nCheck the build logs here: ${BUILD_URL}\nPlease investigate the issue."
         }
     }
 }
