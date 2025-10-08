@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKER_IMAGE_NAME = "knightstriker/scientific-calculator"
+        DOCKER_IMAGE_NAME = "nonachadcp/scientific-calculator"
     }
 
     stages {

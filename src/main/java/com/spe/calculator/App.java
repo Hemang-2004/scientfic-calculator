@@ -21,7 +21,7 @@ public class App {
             System.out.print("Enter your choice (1-5): ");
 
             int choice = scanner.nextInt();
-
+            scanner.nextLine();
             switch (choice) {
                 case 1: // Square Root
                     System.out.print("Enter a number: ");
