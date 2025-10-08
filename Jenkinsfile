@@ -24,11 +24,12 @@ pipeline {
                     sh '''
                         echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
                         docker push ${DOCKER_IMAGE_NAME}:latest
-                        docker logout
                     '''
                 }
             }
         }
+
+
 
         stage('Deploy via Ansible') {
             steps {
