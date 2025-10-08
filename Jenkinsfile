@@ -13,13 +13,14 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+
         stage('2. Build Docker Image') {
             steps {
                 echo 'Building the Docker image...'
-                // CORRECTED VARIABLE NAME HERE
                 sh "docker build -t ${DOCKER_IMAGE_NAME}:latest ."
             }
         }
+
         stage('3. Push to Docker Hub') {
             steps {
                 echo 'Logging in and pushing the image...'
@@ -27,6 +28,7 @@ pipeline {
                 sh "docker push ${DOCKER_IMAGE_NAME}:latest"
             }
         }
+
         stage('4. Deploy with Ansible') {
             steps {
                 echo 'Deploying the container using Ansible...'
@@ -34,30 +36,42 @@ pipeline {
             }
         }
     }
-    // === MODIFIED SECTION FOR EMAIL NOTIFICATIONS ===
+
+    // === FINAL MAIL NOTIFICATION SECTION ===
     post {
         always {
             echo 'Pipeline finished. Logging out of Docker Hub.'
             sh 'docker logout'
         }
+
         success {
-            emailext (
-                subject: "SUCCESS: Pipeline '${env.JOB_NAME}' - Build #${env.BUILD_NUMBER}",
-                body: """<p>SUCCESS: Pipeline <b>${env.JOB_NAME}</b> - Build #${env.BUILD_NUMBER}</p>
-                           <p>The application was deployed successfully.</p>
-                           <p>Check console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                to: 'hemangseth0411@gmail.com' // <-- REMEMBER TO CHANGE THIS TO YOUR EMAIL
-            )
+            mail to: 'hemangseth0411@gmail.com',
+                 subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
+                 body: """\
+Build succeeded!
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Docker Image: ${DOCKER_IMAGE_NAME}:latest
+Build URL: ${BUILD_URL}
+
+All stages completed successfully.
+"""
         }
+
         failure {
-            emailext (
-                subject: "FAILURE: Pipeline '${env.JOB_NAME}' - Build #${env.BUILD_NUMBER}",
-                body: """<p>FAILURE: Pipeline <b>${env.JOB_NAME}</b> - Build #${env.BUILD_NUMBER}</p>
-                           <p>The pipeline failed. Please check the logs.</p>
-                           <p>Check console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                to: 'hemangseth0411@gmail.com' // <-- REMEMBER TO CHANGE THIS TO YOUR EMAIL
-            )
+            mail to: 'hemangseth0411@gmail.com',
+                 subject: "FAILURE: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
+                 body: """\
+Build failed!
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Docker Image: ${DOCKER_IMAGE_NAME}:latest
+Check the build logs here: ${BUILD_URL}
+
+Please investigate the issue.
+"""
         }
     }
 }
-
