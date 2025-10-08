@@ -41,18 +41,18 @@ pipeline {
                 echo 'Starting Docker container...'
                 sh """
                    docker rm -f scientific-calculator-app || true
-                   docker run -dit --name scientific-calculator-app ${DOCKER_IMAGE_NAME}:latest
+                   docker run -d --name scientific-calculator-app ${DOCKER_IMAGE_NAME}:latest tail -f /dev/null
                 """
             }
         }
 
-
-        stage('6. Test Container') {
+        stage('6. Start App inside Container') {
             steps {
-                echo 'Testing the container...'
-                sh "docker exec scientific-calculator-app java -jar scientific-calculator.jar"
+                echo 'Starting app inside container...'
+                sh "docker exec -d scientific-calculator-app java -jar scientific-calculator.jar"
             }
         }
+
     }
 
     post {
