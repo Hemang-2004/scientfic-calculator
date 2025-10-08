@@ -28,6 +28,7 @@ public class AppTest {
         assertEquals(-1, App.factorial(-5)); // Error case
     }
 
+
     @Test
     @DisplayName("Test Natural Logarithm Function")
     void testNaturalLog() {
@@ -44,3 +45,4 @@ public class AppTest {
         assertEquals(0.25, App.power(2.0, -2.0), DELTA);
     }
 }
+
