@@ -30,11 +30,11 @@ pipeline {
         }
 
         stage('4. Deploy with Ansible') {
-            steps {
-                echo 'Deploying the container using Ansible...'
-                sh 'ansible-playbook playbook.yml'
-            }
-        }
+                    steps {
+                        echo 'Deploying the container using Ansible...'
+                        sh 'BUILD_ID=dontKillMe ansible-playbook playbook.yml'
+                    }
+                }
 
         stage('5. Run Docker Container') {
             steps {
@@ -46,12 +46,6 @@ pipeline {
             }
         }
 
-        stage('6. Start App inside Container') {
-            steps {
-                echo 'Starting app inside container...'
-                sh "docker exec -d scientific-calculator-app java -jar scientific-calculator.jar"
-            }
-        }
 
     }
 
