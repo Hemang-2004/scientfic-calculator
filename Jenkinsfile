@@ -36,6 +36,19 @@ pipeline {
             }
         }
     }
+    stage('5. Run Docker Container') {
+        steps {
+            echo 'Starting Docker container...'
+            sh "docker run -dit --name scientific-calculator-app ${DOCKER_IMAGE_NAME}:latest"
+        }
+    }
+
+    stage('6. Test Container') {
+        steps {
+            echo 'Testing the container...'
+            sh "docker exec -it scientific-calculator-app java -jar scientific-calculator.jar"
+        }
+    }
 
     // === FINAL MAIL NOTIFICATION SECTION ===
     post {
