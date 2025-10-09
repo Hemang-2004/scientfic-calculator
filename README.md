@@ -45,7 +45,7 @@ mvn clean install
 docker build -t scientific-calculator .
 
 # Run the Docker container interactively
-docker run -it --name scientific-calculator-app scientific-calculator
+docker exec -it scientific-calculator-app java -jar app.jar
 ```
 ## ⚡ Features of the Calculator
 
