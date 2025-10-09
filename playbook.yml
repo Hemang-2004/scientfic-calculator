@@ -15,6 +15,7 @@
         name: "nonachadcp/scientific-calculator:latest"
         source: pull
 
+
     - name: Run the Docker container
       community.docker.docker_container:
         name: scientific-calculator-app
