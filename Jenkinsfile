@@ -42,6 +42,7 @@ pipeline {
 
         stage('Deploy via Ansible') {
             steps {
+                sh 'source ~/ansible-venv/bin/activate'
                 sh 'ansible-playbook -i inventory.ini playbook.yml'
             }
         }
