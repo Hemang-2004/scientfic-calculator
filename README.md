@@ -28,24 +28,6 @@ The CI/CD pipeline automates the following stages:
 - **Jenkinsfile** – Automates CI/CD: build, test, push, deploy, and notify.  
 - **Ansible Playbook (playbook.yml)** – Automates container deployment and management.
 
-## 🚀 How to Run Manually
-**Prerequisites:** Java 17, Maven, Docker  
-
-### Commands
-```bash
-# Clone repository
-git clone https://github.com/Hemang-2004/scientfic-calculator.git
-cd scientfic-calculator
-
-# Build Java application using Maven
-mvn clean install
-
-# Build Docker image
-docker build -t scientific-calculator .
-
-# Run Docker container interactively
-docker run -it --name scientific-calculator-app scientific-calculator
-```
 
 ## 🔧 Manual Commands for Testing
 
