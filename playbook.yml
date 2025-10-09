@@ -1,8 +1,6 @@
 - name: Deploy Scientific Calculator Docker Container
   hosts: localhost
   connection: local
-  vars:
-    ansible_python_interpreter: /opt/homebrew/bin/python3
   tasks:
     - name: Stop and remove any existing container
       community.docker.docker_container:
@@ -14,7 +12,6 @@
       community.docker.docker_image:
         name: "nonachadcp/scientific-calculator:latest"
         source: pull
-
 
     - name: Run the Docker container
       community.docker.docker_container:
