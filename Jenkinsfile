@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Test Java App') {
+                    steps {
+                        sh 'mvn test'
+                    }
+                }
+
         stage('Build Java App') {
             steps {
                 sh 'mvn clean install'
@@ -47,6 +53,9 @@ pipeline {
                  subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
                  body: "Build succeeded! Docker Image: ${DOCKER_IMAGE_NAME}:latest"
         }
+
+
+
 
         failure {
             mail to: 'nonachadcp@gmail.com',
