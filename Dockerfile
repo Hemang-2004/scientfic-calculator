@@ -6,6 +6,8 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
+
+
 # Stage 2: Run
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
