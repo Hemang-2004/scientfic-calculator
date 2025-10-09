@@ -52,7 +52,7 @@ pipeline {
         success {
             mail to: 'nonachadcp@gmail.com',
                  subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
-                 body: "Build succeeded! Docker Image: ${DOCKER_IMAGE_NAME}:latest"
+                 body: "Build succeeded! Congratulations Hemang you have done it awesome Docker Image: ${DOCKER_IMAGE_NAME}:latest"
         }
 
 
@@ -61,7 +61,7 @@ pipeline {
         failure {
             mail to: 'nonachadcp@gmail.com',
                  subject: "FAILURE: Jenkins Build #${BUILD_NUMBER} for ${JOB_NAME}",
-                 body: "Build failed! Check Jenkins logs: ${BUILD_URL}"
+                 body: "Build failed! Hemang sorry to say but you are terrible in this Check Jenkins logs: ${BUILD_URL}"
         }
     }
 }
