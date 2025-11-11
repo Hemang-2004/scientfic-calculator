@@ -8,7 +8,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
-        System.out.println("Welcome to the Scientific Calculator!");
+        System.out.println("Welcome to the Scientific Calculator! How's your day ?");
         System.out.println("===================================");
 
         while (running) {
