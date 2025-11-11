@@ -24,7 +24,7 @@ public class App {
             scanner.nextLine();
             switch (choice) {
                 case 1: // Square Root
-                    System.out.print("Enter a number: ");
+                    System.out.print("Enter a number Below: ");
                     double sqrtInput = scanner.nextDouble();
                     System.out.println("Result: " + squareRoot(sqrtInput));
                     break;
