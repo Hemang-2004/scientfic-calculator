@@ -11,7 +11,7 @@ public class App {
         System.out.println("====================================");
 
         while (running) {
-            System.out.println("\nChoose an operation:");
+            System.out.println("\nChoose an operation What you want to perform:");
             System.out.println("1. Square Root (√x)");
             System.out.println("2. Factorial (!x)");
             System.out.println("3. Natural Logarithm (ln(x))");
