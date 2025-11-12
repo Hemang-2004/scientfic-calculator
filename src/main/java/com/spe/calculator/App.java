@@ -7,9 +7,6 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-
-
-
         System.out.println("Welcome to the Scientific Calculator");
         System.out.println("===================================");
 
